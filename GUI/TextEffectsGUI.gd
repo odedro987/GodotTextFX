@@ -8,6 +8,8 @@ func _ready():
 	#GUI connections.
 	get_node("Panel/MainGrid/TextBox").connect("text_changed", self, "updateText")
 	get_node("Panel/MainGrid/DelayUpdateButton").connect("toggled", self, "toggleUpdateDelay")
+	get_node("Panel/MainGrid/PositionGrid/PosX").connect("text_changed", self, "updatePosX")
+	get_node("Panel/MainGrid/PositionGrid/PosY").connect("text_changed", self, "updatePosY")
 	#Rainbow connections.
 	get_node("Panel/MainGrid/RainbowGrid/RainbowButton").connect("toggled", self, "toggleRainbow")
 	get_node("Panel/MainGrid/RainbowGrid/RIncrement").connect("text_changed", self, "updateRIncrementStep")
@@ -24,10 +26,15 @@ func _ready():
 	get_node("Panel/MainGrid/SineWaveGrid/SineWaveButton").connect("toggled", self, "toggleSineWave")
 	get_node("Panel/MainGrid/SineWaveGrid/SWFrequency").connect("value_changed", self, "updateSineFrequency")
 	get_node("Panel/MainGrid/SineWaveGrid/SWAmplitude").connect("value_changed", self, "updateSineAmplitude")
+	get_node("Panel/MainGrid/SineWaveGrid/SWDelay").connect("value_changed", self, "updateSineDelay")
 
 #Updates the text and resets typewriter.
 func updateText(text):
 	singleLineLabel.updateText(text)
+func updatePosX(text):
+	singleLineLabel.updatePosition(Vector2(float(text) if text != "" else 100, singleLineLabel.pos.y))
+func updatePosY(text):
+	singleLineLabel.updatePosition(Vector2(singleLineLabel.pos.x, float(text) if text != "" else 100))
 #////////////////////////////////////////////RAINBOW/////////////////////////////////////////////////////
 #Toggles rainbow option.
 func toggleRainbow(pressed):
@@ -68,4 +75,6 @@ func updateSineFrequency(value):
 	singleLineLabel.updateSineFrequency(value)
 func updateSineAmplitude(value):
 	singleLineLabel.updateSineAmplitude(value)
+func updateSineDelay(value):
+	singleLineLabel.updateSineDelay(value)
 #//////////////////////////////////////////////END///////////////////////////////////////////////////////

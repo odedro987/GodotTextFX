@@ -33,6 +33,7 @@ var sShakeOffset = 1
 var swSineWaveToggle = false
 var swFrequency = 5
 var swAmplitude = 10
+var swDelay = 0.003
 var swIncrement = 0
 var swShift = 0
 var swSineInc = 0
@@ -59,7 +60,7 @@ func _draw():
 			if(swSineWaveToggle):
 				#0.003 is a smoothener || delaying the sine wave effect.
 				#Divided by cutoff to save the ratio 0.003.
-				swIncrement = swIncrement + (0.003 / cutoff)
+				swIncrement = swIncrement + (swDelay / cutoff)
 				#Adds the increment of the sine to that of the typewriter and multiply by the delay.
 				swSineInc = (swIncrement + twIncrement)
 				#Sin of the incrementation times 6 times the sine frequency, time the amplitude.
@@ -110,9 +111,12 @@ func getRGBValueString():
 
 #Sets SingleLineLabelFX.
 func setLabel(x, y, text):
-	pos = Vector2(x, y)
-	set_pos(pos)
+	updatePosition(Vector2(x, y))
 	updateText(text)
+#Updates position.
+func updatePosition(newPos):
+	self.pos = newPos
+	set_pos(pos)
 #Updates the text and resets typewriter.
 func updateText(text):
 	self.text = text
@@ -186,4 +190,6 @@ func updateSineFrequency(value):
 	self.swFrequency = value
 func updateSineAmplitude(value):
 	self.swAmplitude = value
+func updateSineDelay(value):
+	self.swDelay = value
 #//////////////////////////////////////////////END///////////////////////////////////////////////////////

@@ -28,10 +28,10 @@ focus/ignore_mouse = false
 focus/stop_mouse = true
 size_flags/horizontal = 3
 size_flags/vertical = 3
-margin/left = 683.0
-margin/top = 7.0
-margin/right = 904.0
-margin/bottom = 594.0
+margin/left = 675.0
+margin/top = 4.0
+margin/right = 896.0
+margin/bottom = 591.0
 
 [node name="MainGrid" type="GridContainer" parent="Panel"]
 
@@ -39,12 +39,56 @@ focus/ignore_mouse = false
 focus/stop_mouse = true
 size_flags/horizontal = 3
 size_flags/vertical = 2
-margin/left = 10.0
-margin/top = 9.0
-margin/right = 210.0
-margin/bottom = 578.0
-custom_constants/vseparation = 20
+margin/left = 8.0
+margin/top = 11.0
+margin/right = 208.0
+margin/bottom = 580.0
+custom_constants/vseparation = 10
 columns = 1
+
+[node name="PositionGrid" type="GridContainer" parent="Panel/MainGrid"]
+
+focus/ignore_mouse = false
+focus/stop_mouse = false
+size_flags/horizontal = 3
+size_flags/vertical = 2
+margin/left = 0.0
+margin/top = 0.0
+margin/right = 200.0
+margin/bottom = 24.0
+columns = 2
+
+[node name="PosX" type="LineEdit" parent="Panel/MainGrid/PositionGrid"]
+
+focus/ignore_mouse = false
+focus/stop_mouse = true
+size_flags/horizontal = 3
+size_flags/vertical = 2
+margin/left = 0.0
+margin/top = 0.0
+margin/right = 98.0
+margin/bottom = 24.0
+placeholder/text = "X - 100"
+placeholder/alpha = 0.6
+focus_mode = 2
+caret/caret_blink = false
+caret/caret_blink_speed = 0.65
+
+[node name="PosY" type="LineEdit" parent="Panel/MainGrid/PositionGrid"]
+
+focus/ignore_mouse = false
+focus/stop_mouse = true
+size_flags/horizontal = 3
+size_flags/vertical = 2
+margin/left = 102.0
+margin/top = 0.0
+margin/right = 200.0
+margin/bottom = 24.0
+placeholder/text = "Y - 100"
+placeholder/alpha = 0.6
+focus_mode = 2
+caret/caret_blink = false
+caret/caret_blink_speed = 0.65
 
 [node name="TextBox" type="LineEdit" parent="Panel/MainGrid"]
 
@@ -53,9 +97,10 @@ focus/stop_mouse = true
 size_flags/horizontal = 2
 size_flags/vertical = 2
 margin/left = 0.0
-margin/top = 0.0
+margin/top = 34.0
 margin/right = 200.0
-margin/bottom = 24.0
+margin/bottom = 58.0
+placeholder/text = "Your text here"
 placeholder/alpha = 0.6
 focus_mode = 2
 caret/caret_blink = false
@@ -68,9 +113,9 @@ focus/stop_mouse = true
 size_flags/horizontal = 2
 size_flags/vertical = 2
 margin/left = 0.0
-margin/top = 44.0
+margin/top = 68.0
 margin/right = 200.0
-margin/bottom = 66.0
+margin/bottom = 90.0
 toggle_mode = true
 enabled_focus_mode = 2
 shortcut = null
@@ -85,9 +130,9 @@ focus/stop_mouse = true
 size_flags/horizontal = 3
 size_flags/vertical = 2
 margin/left = 0.0
-margin/top = 86.0
+margin/top = 100.0
 margin/right = 200.0
-margin/bottom = 244.0
+margin/bottom = 258.0
 custom_constants/vseparation = 10
 columns = 1
 
@@ -179,9 +224,9 @@ focus/stop_mouse = false
 size_flags/horizontal = 3
 size_flags/vertical = 2
 margin/left = 0.0
-margin/top = 264.0
+margin/top = 268.0
 margin/right = 200.0
-margin/bottom = 324.0
+margin/bottom = 328.0
 columns = 1
 
 [node name="TypewriterButton" type="CheckButton" parent="Panel/MainGrid/TypewriterGrid"]
@@ -245,9 +290,9 @@ focus/stop_mouse = false
 size_flags/horizontal = 3
 size_flags/vertical = 2
 margin/left = 0.0
-margin/top = 344.0
+margin/top = 338.0
 margin/right = 200.0
-margin/bottom = 404.0
+margin/bottom = 398.0
 columns = 1
 
 [node name="ShakeButton" type="CheckButton" parent="Panel/MainGrid/ShakeGrid"]
@@ -312,9 +357,9 @@ focus/stop_mouse = false
 size_flags/horizontal = 2
 size_flags/vertical = 2
 margin/left = 0.0
-margin/top = 424.0
+margin/top = 408.0
 margin/right = 200.0
-margin/bottom = 560.0
+margin/bottom = 544.0
 columns = 1
 
 [node name="SineWaveButton" type="CheckButton" parent="Panel/MainGrid/SineWaveGrid"]
@@ -324,9 +369,9 @@ focus/stop_mouse = true
 size_flags/horizontal = 3
 size_flags/vertical = 1
 margin/left = 0.0
-margin/top = 19.0
+margin/top = 0.0
 margin/right = 200.0
-margin/bottom = 41.0
+margin/bottom = 22.0
 toggle_mode = true
 enabled_focus_mode = 2
 shortcut = null
@@ -341,9 +386,9 @@ focus/stop_mouse = true
 size_flags/horizontal = 2
 size_flags/vertical = 0
 margin/left = 0.0
-margin/top = 64.0
+margin/top = 26.0
 margin/right = 200.0
-margin/bottom = 78.0
+margin/bottom = 40.0
 text = "Frequency"
 align = 1
 percent_visible = 1.0
@@ -357,9 +402,9 @@ focus/stop_mouse = true
 size_flags/horizontal = 2
 size_flags/vertical = 0
 margin/left = 0.0
-margin/top = 82.0
+margin/top = 44.0
 margin/right = 200.0
-margin/bottom = 98.0
+margin/bottom = 60.0
 range/min = 1.0
 range/max = 25.0
 range/step = 1.0
@@ -378,9 +423,9 @@ focus/stop_mouse = true
 size_flags/horizontal = 2
 size_flags/vertical = 0
 margin/left = 0.0
-margin/top = 102.0
+margin/top = 64.0
 margin/right = 200.0
-margin/bottom = 116.0
+margin/bottom = 78.0
 text = "Amplitude"
 align = 1
 percent_visible = 1.0
@@ -394,15 +439,52 @@ focus/stop_mouse = true
 size_flags/horizontal = 2
 size_flags/vertical = 0
 margin/left = 0.0
-margin/top = 120.0
+margin/top = 82.0
 margin/right = 200.0
-margin/bottom = 136.0
+margin/bottom = 98.0
 range/min = 1.0
 range/max = 50.0
 range/step = 1.0
 range/page = 0.0
 range/value = 1.0
 range/exp_edit = false
+range/rounded = false
+tick_count = 0
+ticks_on_borders = true
+focus_mode = 2
+
+[node name="Label2" type="Label" parent="Panel/MainGrid/SineWaveGrid"]
+
+focus/ignore_mouse = true
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 0
+margin/left = 0.0
+margin/top = 102.0
+margin/right = 200.0
+margin/bottom = 116.0
+text = "Delay"
+align = 1
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="SWDelay" type="HSlider" parent="Panel/MainGrid/SineWaveGrid"]
+
+focus/ignore_mouse = false
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 0
+margin/left = 0.0
+margin/top = 120.0
+margin/right = 200.0
+margin/bottom = 136.0
+range/min = 0.01
+range/max = 1.0
+range/step = 0.01
+range/page = 0.0
+range/value = 0.01
+range/exp_edit = true
 range/rounded = false
 tick_count = 0
 ticks_on_borders = true
