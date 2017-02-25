@@ -19,11 +19,13 @@ var r = 1
 var g = 1
 var b = 1
 #Typewriter variables.
-var twTypeWriterToggle = false
+var twTypeWriterToggle = true
 var twCharWidth = 10
 var twSpace = 0
 var twIncrement = 0
 var twDelay = 0
+var twLineEnd = 35
+var twLine = 0
 var timer = 0
 var cutoff = 0
 #Shake variables.
@@ -43,6 +45,7 @@ func _ready():
 	defaultMonoFont = get_node("Label").get_font("font")
 	#Default text.
 	text = ""
+	setTypewriter()
 	#Enables process function.
 	set_process(true)
 
@@ -54,8 +57,17 @@ func _draw():
 		#Resets typewriter variables.
 		twIncrement = 0
 		twSpace = 0
+		twLine = 0
 		#Loops through the text upto cutoff.
 		while(twIncrement < cutoff):
+			var length = 0
+			while(text[twIncrement] != " " && twIncrement < text.length() - 1):
+				twIncrement = twIncrement + 1
+				length = length + 1
+			if(twSpace + length > twLineEnd):
+				twSpace = 0
+				twLine = twLine + 1
+			twIncrement = twIncrement - length
 			#If sine waving is on, increment and calculate the sine wave depending on the char position.
 			if(swSineWaveToggle):
 				#0.003 is a smoothener || delaying the sine wave effect.
@@ -67,7 +79,7 @@ func _draw():
 				swShift = (sin(swSineInc  * 6 * swFrequency) * swAmplitude)
 			#Draws each letter with consideration to sine wave/shake effects offsets if toggled and the color.
 			draw_string(defaultMonoFont, Vector2(pos.x + twSpace*twCharWidth\
-						 + (int(rand_range(-sShakeOffset, sShakeOffset)) if sShakeToggle else 0), pos.y\
+						 + (int(rand_range(-sShakeOffset, sShakeOffset)) if sShakeToggle else 0), pos.y + (13 * twLine)\
 						 + (int(rand_range(-sShakeOffset, sShakeOffset)) if sShakeToggle else 0)\
 						 + (int(swShift) if swSineWaveToggle else 0)), text[twIncrement], Color(r, g, b))
 			#Incrementing the typewriter.
