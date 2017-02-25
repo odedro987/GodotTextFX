@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=1]
 
-[ext_resource path="res://TextEffects/SingleLineLabelFX.gd" type="Script" id=1]
+[ext_resource path="res://GUI/TextEffectsGUI.gd" type="Script" id=1]
 [ext_resource path="res://Fonts/MonoPixel10.fnt" type="BitmapFont" id=2]
 
 [node name="SingleLineLabelFX" type="Control"]
