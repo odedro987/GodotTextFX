@@ -1,10 +1,11 @@
 extends Control
 
-var text = "Hello World!"
+var text = ""
+var pos = Vector2(0, 0)
 var defaultFont = Label.new().get_font("")
 var defaultMonoFont = ""
 var byCharRendering = false
-var updateDelay = 1
+var updateDelay = 2
 var updateCounter = 0
 var delayUpdate = false
 #Rainbow variables.
@@ -32,7 +33,6 @@ var sShakeOffset = 1
 var swSineWaveToggle = false
 var swFrequency = 5
 var swAmplitude = 10
-var swDelay = 1
 var swIncrement = 0
 var swShift = 0
 var swSineInc = 0
@@ -41,50 +41,32 @@ func _ready():
 	#Initializes the default monospace font.
 	defaultMonoFont = get_node("Label").get_font("font")
 	#Default text.
-	text = "Hello World!"
-	#GUI connections.
-	get_node("Panel/MainGrid/TextBox").connect("text_changed", self, "updateText")
-	get_node("Panel/MainGrid/DelayUpdateButton").connect("toggled", self, "toggleUpdateDelay")
-	#Rainbow connections.
-	get_node("Panel/MainGrid/RainbowGrid/RainbowButton").connect("toggled", self, "toggleRainbow")
-	get_node("Panel/MainGrid/RainbowGrid/RIncrement").connect("text_changed", self, "updateRIncrementStep")
-	get_node("Panel/MainGrid/RainbowGrid/RFrequency").connect("text_changed", self, "updateRFrequency")
-	get_node("Panel/MainGrid/RainbowGrid/RCenter").connect("text_changed", self, "updateRCenter")
-	get_node("Panel/MainGrid/RainbowGrid/RWidth").connect("text_changed", self, "updateRWidth")
-	#Typewriter connections.
-	get_node("Panel/MainGrid/TypewriterGrid/TypewriterButton").connect("toggled", self, "toggleTypewriter")
-	get_node("Panel/MainGrid/TypewriterGrid/TWDelay").connect("value_changed", self, "updateTypewriterDelay")
-	#Shake connections.
-	get_node("Panel/MainGrid/ShakeGrid/ShakeButton").connect("toggled", self, "toggleShake")
-	get_node("Panel/MainGrid/ShakeGrid/ShakeOffset").connect("value_changed", self, "updateShakeOffset")
-	#Sine wave connections.
-	get_node("Panel/MainGrid/SineWaveGrid/SineWaveButton").connect("toggled", self, "toggleSineWave")
-	get_node("Panel/MainGrid/SineWaveGrid/SWFrequency").connect("value_changed", self, "updateSineFrequency")
-	get_node("Panel/MainGrid/SineWaveGrid/SWAmplitude").connect("value_changed", self, "updateSineAmplitude")
-	get_node("Panel/MainGrid/SineWaveGrid/SWDelay").connect("value_changed", self, "updateSineDelay")
+	text = ""
 	#Enables process function.
 	set_process(true)
 
 #Draw function.
 func _draw():
 	#If not typewriter draw string normally.
-	if(!byCharRendering): draw_string(defaultFont, Vector2(100, 100), text, Color(r, g, b))
+	if(!byCharRendering): draw_string(defaultFont, Vector2(pos.x, pos.y), text, Color(r, g, b))
 	else:
 		#Resets typewriter variables.
 		twIncrement = 0
 		twSpace = 0
 		#Loops through the text upto cutoff.
-		for j in range(cutoff):
+		while(twIncrement < cutoff):
 			#If sine waving is on, increment and calculate the sine wave depending on the char position.
 			if(swSineWaveToggle):
-				swIncrement = swIncrement + 1
+				#0.003 is a smoothener || delaying the sine wave effect.
+				#Divided by cutoff to save the ratio 0.003.
+				swIncrement = swIncrement + (0.003 / cutoff)
 				#Adds the increment of the sine to that of the typewriter and multiply by the delay.
-				swSineInc = swIncrement + twIncrement * swDelay
-				#Sin of the incrementation times PI times the sine frequency, time the amplitude.
-				swShift = sin(swSineInc * 3.14 * swFrequency) * swAmplitude
+				swSineInc = (swIncrement + twIncrement)
+				#Sin of the incrementation times 6 times the sine frequency, time the amplitude.
+				swShift = (sin(swSineInc  * 6 * swFrequency) * swAmplitude)
 			#Draws each letter with consideration to sine wave/shake effects offsets if toggled and the color.
-			draw_string(defaultMonoFont, Vector2(100 + twSpace*twCharWidth\
-						 + (int(rand_range(-sShakeOffset, sShakeOffset)) if sShakeToggle else 0), 100\
+			draw_string(defaultMonoFont, Vector2(pos.x + twSpace*twCharWidth\
+						 + (int(rand_range(-sShakeOffset, sShakeOffset)) if sShakeToggle else 0), pos.y\
 						 + (int(rand_range(-sShakeOffset, sShakeOffset)) if sShakeToggle else 0)\
 						 + (int(swShift) if swSineWaveToggle else 0)), text[twIncrement], Color(r, g, b))
 			#Incrementing the typewriter.
@@ -126,41 +108,60 @@ func _process(delta):
 func getRGBValueString():
 	return "(" + str(r) + ", " + str(g) + ", " + str(b) + ")"
 
+#Sets SingleLineLabelFX.
+func setLabel(x, y, text):
+	pos = Vector2(x, y)
+	set_pos(pos)
+	updateText(text)
 #Updates the text and resets typewriter.
 func updateText(text):
 	self.text = text
 	cutoff = 0
 	timer = 0
-
 #////////////////////////////////////////////RAINBOW/////////////////////////////////////////////////////
+#Sets rainbow with all variables.
+func setRainbow(incrementStep, frequency, center, width):
+	toggleRainbow(true)
+	updateRIncrementStep(incrementStep)
+	updateRFrequency(frequency)
+	updateRCenter(center)
+	updateRWidth(width)
 #Toggles rainbow option.
 func toggleRainbow(pressed):
 	self.rRainbowToggle = pressed
 	#Resets the rgb values.
 	if(!pressed): 
-		r = 1
-		g = 1
-		b = 1
-func updateRIncrementStep(text):
-	rIncrementStep = float(text) if text != "" else 0.2
-func updateRFrequency(text):
-	rFrequency = float(text) if text != "" else 0.4
-func updateRCenter(text):
-	rCenter = int(text) if text != "" else 128
-func updateRWidth(text):
-	rWidth = int(text) if text != "" else 127
+		self.r = 1
+		self.g = 1
+		self.b = 1
+func updateRIncrementStep(value):
+	self.rIncrementStep = value
+func updateRFrequency(value):
+	self.rFrequency = value
+func updateRCenter(value):
+	self.rCenter = value
+func updateRWidth(value):
+	self.rWidth = value
 #//////////////////////////////////////////////END///////////////////////////////////////////////////////
 #////////////////////////////////////////////TYPEWRITER//////////////////////////////////////////////////
+#Sets typewriter.
+func setTypewriter(delay):
+	toggleTypewriter(true)
+	updateTypewriterDelay(delay)
 #Toggles rainbow option.
 func toggleTypewriter(pressed):
 	self.twTypeWriterToggle = pressed
 	self.byCharRendering = pressed
-	cutoff = 0
-	timer = 0
+	self.cutoff = 0
+	self.timer = 0
 func updateTypewriterDelay(value):
 	self.twDelay = value
 #//////////////////////////////////////////////END///////////////////////////////////////////////////////
 #/////////////////////////////////////////////SHAKE//////////////////////////////////////////////////////
+#Sets shake.
+func setShake(offset):
+	toggleShake(true)
+	updateShakeOffset(offset)
 #Toggles rainbow option.
 func toggleShake(pressed):
 	self.sShakeToggle = pressed
@@ -173,6 +174,11 @@ func toggleUpdateDelay(pressed):
 	self.delayUpdate = pressed
 #//////////////////////////////////////////////END///////////////////////////////////////////////////////
 #///////////////////////////////////////////SINE_WAVE////////////////////////////////////////////////////
+#Sets sine wave.
+func setSineWave(frequency, amplitude):
+	toggleSineWave(true)
+	updateSineFrequency(frequency)
+	updateSineAmplitude(amplitude)
 #Toggles rainbow option.
 func toggleSineWave(pressed):
 	self.swSineWaveToggle = pressed
@@ -180,6 +186,4 @@ func updateSineFrequency(value):
 	self.swFrequency = value
 func updateSineAmplitude(value):
 	self.swAmplitude = value
-func updateSineDelay(value):
-	self.swDelay = value
 #//////////////////////////////////////////////END///////////////////////////////////////////////////////
