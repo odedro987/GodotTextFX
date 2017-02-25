@@ -116,8 +116,8 @@ func setLabel(x, y, text):
 #Updates the text and resets typewriter.
 func updateText(text):
 	self.text = text
-	cutoff = 0
-	timer = 0
+	self.cutoff = 0
+	self.timer = 0
 #////////////////////////////////////////////RAINBOW/////////////////////////////////////////////////////
 #Sets rainbow with all variables.
 func setRainbow(incrementStep, frequency, center, width):
