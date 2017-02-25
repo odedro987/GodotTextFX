@@ -19,6 +19,7 @@ var updateDelay = 2
 var updateCounter = 0
 var delayUpdate = false
 var modifier = 0
+var done = false
 #Rainbow variables.
 var rRainbowToggle = false
 var rFrequency = 0.3
@@ -166,6 +167,8 @@ func _process(delta):
 				timer = 0
 			#Increments the timer.
 			else: timer = timer + 1
+		elif(!done):
+			done = true
 	
 	#In case of delaying the update function.
 	if(delayUpdate):
