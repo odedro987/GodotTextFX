@@ -4,10 +4,7 @@ var singleLineLabel
 
 func _ready():
 	singleLineLabel = get_node("SingleLineLabelFX")
-	singleLineLabel.setLabel(200, 200, "Hi")
-	#get_node("RichLabelFX").setLabel(100, 100, "\\7Oded\\x: Hi! what's up \\2Manuel\\x?")
-	get_node("DialogFX").setDialogMessages(["\\7Oded\\x: Hi! what's up \\2Manuel\\x?", "\\7Manuel\\x: Hi! I'm \\3GOOD\\x!"])
-	get_node("DialogFX").startMessage()
+	singleLineLabel.setLabel(100, 100, "Hi")
 	#GUI connections.
 	get_node("Panel/MainGrid/TextBox").connect("text_changed", self, "updateText")
 	get_node("Panel/MainGrid/DelayUpdateButton").connect("toggled", self, "toggleUpdateDelay")

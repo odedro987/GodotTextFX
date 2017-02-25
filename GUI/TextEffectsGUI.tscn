@@ -1,9 +1,7 @@
-[gd_scene load_steps=5 format=1]
+[gd_scene load_steps=3 format=1]
 
 [ext_resource path="res://GUI/TextEffectsGUI.gd" type="Script" id=1]
 [ext_resource path="res://TextEffects/SingleLineLabelFX.tscn" type="PackedScene" id=2]
-[ext_resource path="res://TextEffects/RichLabelFX.tscn" type="PackedScene" id=3]
-[ext_resource path="res://TextEffects/DialogFX.tscn" type="PackedScene" id=4]
 
 [node name="MainScreen" type="Control"]
 
@@ -23,18 +21,6 @@ margin/left = 2.0
 margin/top = 1.0
 margin/right = 202.0
 margin/bottom = 123.0
-
-[node name="RichLabelFX" parent="." instance=ExtResource( 3 )]
-
-margin/right = 286.0
-margin/bottom = 98.0
-
-[node name="DialogFX" parent="." instance=ExtResource( 4 )]
-
-margin/left = -74.0
-margin/top = 214.0
-margin/right = 425.0
-margin/bottom = 305.0
 
 [node name="Panel" type="Panel" parent="."]
 
