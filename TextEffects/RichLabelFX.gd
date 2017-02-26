@@ -22,6 +22,7 @@ var modifier = 0
 var done = false
 var modifierHeightOffset = 20
 var lastModifierIndex = -1
+var startFromIndex = 0
 #Rainbow variables.
 var rRainbowToggle = false
 var rFrequency = 0.3
@@ -35,8 +36,8 @@ var b = 1
 #Typewriter variables.
 var twTypeWriterToggle = true
 var twCharWidth = 10
-var twSpace = 0
-var twIncrement = 0
+var twSpace = startFromIndex
+var twIncrement = startFromIndex
 var twDelay = 0
 var twLineEnd = 35
 var twLine = 0
@@ -69,8 +70,8 @@ func _draw():
 	if(!byCharRendering): draw_string(defaultFont, Vector2(pos.x, pos.y), text, Color(r, g, b))
 	else:
 		#Resets typewriter variables.
-		twIncrement = 0
-		twSpace = 0
+		twIncrement = startFromIndex
+		twSpace = startFromIndex
 		twLine = 0
 		#Loops through the text upto cutoff.
 		while(twIncrement < cutoff):
@@ -80,7 +81,7 @@ func _draw():
 				twIncrement = twIncrement + 1
 				length = length + 1
 			if(twSpace + length > twLineEnd):
-				twSpace = 0
+				twSpace = startFromIndex
 				twLine = twLine + 1
 			twIncrement = twIncrement - length
 			#Checks for modifiers and remove them from the text.
@@ -90,7 +91,6 @@ func _draw():
 				twIncrement = twIncrement + 2
 				if(twIncrement + 2 >= text.length() - 1): break
 			if(twIncrement < lastModifierIndex):
-				print(str(cutoff) + ", " + str(lastModifierIndex))
 				modifier = 0
 			#If sine waving is on, increment and calculate the sine wave depending on the char position.
 			if(swSineWaveToggle):
@@ -248,7 +248,7 @@ func updateTypewriterDelay(value):
 #//////////////////////////////////////////////END///////////////////////////////////////////////////////
 #/////////////////////////////////////////////SHAKE//////////////////////////////////////////////////////
 #Sets shake.
-func setShake(offset=3):
+func setShake(offset=2):
 	toggleShake(true)
 	updateShakeOffset(offset)
 #Toggles rainbow option.
