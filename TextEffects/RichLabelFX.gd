@@ -157,6 +157,7 @@ func _draw():
 				draw_set_transform(Vector2(pos.x + twSpace * twCharWidth, pos.y - 2.5 + (modifierHeightOffset * twLine)), inc, Vector2(1, 1))
 				draw_string(defaultMonoFont, Vector2(0, 0), text[twIncrement], Color(r, g, b))
 			else:#Default - normal
+				draw_set_transform(Vector2(0, 0), 0, Vector2(1, 1))
 				draw_string(defaultMonoFont, Vector2(pos.x + twSpace * twCharWidth, pos.y + (modifierHeightOffset * twLine)), text[twIncrement], Color(1, 1, 1))
 			#Incrementing the typewriter.
 			twSpace = twSpace + 1

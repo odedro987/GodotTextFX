@@ -6,7 +6,7 @@ func _ready():
 	get_node("MultiDialogFX").setDialog(["1Derpmon: \\1Err h-hey.\\x",\
 										 "0Derpgel: \\2uhm...\\x yes?",\
 										 "1Derpmon: Uhm.. \\1wou-\\x",\
-										 "0Derpgel: I've got a \\4boyfriend.\\x",\
+										 "0Derpgel: \\9I've\\x got a \\4boyfriend.\\x",\
 										 "1Derpmon: Well, \\7me too!\\x",\
 										 "0Derpgel: Huh?",\
 										 "1Derpmon: \\2Oh...\\x"],\
