@@ -65,6 +65,10 @@ func _draw():
 				swSineInc = (swIncrement + twIncrement)
 				#Sin of the incrementation times 6 times the sine frequency, time the amplitude.
 				swShift = (sin(swSineInc  * 6 * swFrequency) * swAmplitude)
+				if(rRainbowToggle):
+					r =  (sin(rFrequency * rIncrement + twIncrement)     * rWidth + rCenter) / 255
+					g =  (sin(rFrequency * rIncrement + twIncrement + 2) * rWidth + rCenter) / 255
+					b =  (sin(rFrequency * rIncrement + twIncrement + 4) * rWidth + rCenter) / 255
 			#Draws each letter with consideration to sine wave/shake effects offsets if toggled and the color.
 			draw_string(defaultMonoFont, Vector2(pos.x + twSpace*twCharWidth\
 						 + (int(rand_range(-sShakeOffset, sShakeOffset)) if sShakeToggle else 0), pos.y\
