@@ -9,6 +9,8 @@ extends Control
 #\5 - Rainbow  + shake
 #\6 - Rainbow  + sinewave
 #\7 - Rainbow  + sinewave + shake
+#\8 - Rotation
+#\9 - Rotation + rainbow
 #/////////////////////////////////////////////////////////////////////////////#
 var text = ""
 var pos = Vector2(0, 0)
@@ -63,7 +65,7 @@ func _ready():
 	setTypewriter()
 	#Enables process function.
 	set_process(true)
-
+var inc = 0
 #Draw function.
 func _draw():
 	#If not typewriter draw string normally.
@@ -73,6 +75,7 @@ func _draw():
 		twIncrement = startFromIndex
 		twSpace = startFromIndex
 		twLine = 0
+		inc = inc + 0.05 if inc <= (PI * 2) else 0
 		#Loops through the text upto cutoff.
 		while(twIncrement < cutoff):
 			#Goes to next line.
@@ -105,49 +108,56 @@ func _draw():
 					r =  (sin(rFrequency * rIncrement + twIncrement)     * rWidth + rCenter) / 255
 					g =  (sin(rFrequency * rIncrement + twIncrement + 2) * rWidth + rCenter) / 255
 					b =  (sin(rFrequency * rIncrement + twIncrement + 4) * rWidth + rCenter) / 255
-			#/////////////////////////////////////////////////////////////////////////////////////////
+			#////////////////////////////pos/////////////////////////////////////////////////////////////
 			#Draws each letter with consideration to modifiers.
 			if(modifier == 1):#Shake
 				setShake()
 				draw_string(defaultMonoFont,\
-							Vector2(pos.x + twSpace*twCharWidth + (int(rand_range(-sShakeOffset, sShakeOffset))),\
+							Vector2(pos.x + twSpace * twCharWidth + (int(rand_range(-sShakeOffset, sShakeOffset))),\
 							pos.y + (modifierHeightOffset * twLine) + (int(rand_range(-sShakeOffset, sShakeOffset)))),\
 							text[twIncrement], Color(1, 1, 1))
 			elif(modifier == 2):#Sinewave
 				setSineWave()
-				draw_string(defaultMonoFont, Vector2(pos.x + twSpace*twCharWidth, pos.y + (modifierHeightOffset * twLine) + swShift), text[twIncrement], Color(1, 1, 1))
+				draw_string(defaultMonoFont, Vector2(pos.x + twSpace * twCharWidth, pos.y + (modifierHeightOffset * twLine) + swShift), text[twIncrement], Color(1, 1, 1))
 			elif(modifier == 3):#Shake + sinewave
 				setSineWave()
 				setShake()
 				draw_string(defaultMonoFont,\
-							Vector2(pos.x + twSpace*twCharWidth + (int(rand_range(-sShakeOffset, sShakeOffset))),\
+							Vector2(pos.x + twSpace * twCharWidth + (int(rand_range(-sShakeOffset, sShakeOffset))),\
 							pos.y + (modifierHeightOffset * twLine) + swShift + (int(rand_range(-sShakeOffset, sShakeOffset)))),\
 							text[twIncrement], Color(1, 1, 1))
 			elif(modifier == 4):#Rainbow
 				setRainbow()
-				draw_string(defaultMonoFont, Vector2(pos.x + twSpace*twCharWidth, pos.y + (modifierHeightOffset * twLine)), text[twIncrement], Color(r, g, b))
+				draw_string(defaultMonoFont, Vector2(pos.x + twSpace * twCharWidth, pos.y + (modifierHeightOffset * twLine)), text[twIncrement], Color(r, g, b))
 			elif(modifier == 5):#Rainbow + shake
 				setRainbow()
 				setShake()
 				draw_string(defaultMonoFont,\
-							Vector2(pos.x + twSpace*twCharWidth + (int(rand_range(-sShakeOffset, sShakeOffset))),\
+							Vector2(pos.x + twSpace * twCharWidth + (int(rand_range(-sShakeOffset, sShakeOffset))),\
 							pos.y + (modifierHeightOffset * twLine) + (int(rand_range(-sShakeOffset, sShakeOffset)))),\
 							text[twIncrement], Color(r, g, b))
 			elif(modifier == 6):#Rainbow + sinewave
 				setRainbow()
 				setSineWave()
 				draw_string(defaultMonoFont,\
-							Vector2(pos.x + twSpace*twCharWidth, pos.y + (modifierHeightOffset * twLine) + swShift), text[twIncrement], Color(r, g, b))
+							Vector2(pos.x + twSpace * twCharWidth, pos.y + (modifierHeightOffset * twLine) + swShift), text[twIncrement], Color(r, g, b))
 			elif(modifier == 7):#Rainbow + sinewave + shake
 				setShake()
 				setSineWave()
 				setRainbow()
 				draw_string(defaultMonoFont,\
-							Vector2(pos.x + twSpace*twCharWidth + (int(rand_range(-sShakeOffset, sShakeOffset))),\
+							Vector2(pos.x + twSpace * twCharWidth + (int(rand_range(-sShakeOffset, sShakeOffset))),\
 							pos.y + (modifierHeightOffset * twLine) + swShift + (int(rand_range(-sShakeOffset, sShakeOffset)))),\
 							text[twIncrement], Color(r, g, b))
+			elif(modifier == 8):
+				draw_set_transform(Vector2(pos.x + twSpace * twCharWidth, pos.y - 2.5 + (modifierHeightOffset * twLine)), inc, Vector2(1, 1))
+				draw_string(defaultMonoFont, Vector2(0, 0), text[twIncrement], Color(1, 1, 1))
+			elif(modifier == 9):
+				setRainbow()
+				draw_set_transform(Vector2(pos.x + twSpace * twCharWidth, pos.y - 2.5 + (modifierHeightOffset * twLine)), inc, Vector2(1, 1))
+				draw_string(defaultMonoFont, Vector2(0, 0), text[twIncrement], Color(r, g, b))
 			else:#Default - normal
-				draw_string(defaultMonoFont, Vector2(pos.x + twSpace*twCharWidth, pos.y + (modifierHeightOffset * twLine)), text[twIncrement], Color(1, 1, 1))
+				draw_string(defaultMonoFont, Vector2(pos.x + twSpace * twCharWidth, pos.y + (modifierHeightOffset * twLine)), text[twIncrement], Color(1, 1, 1))
 			#Incrementing the typewriter.
 			twSpace = twSpace + 1
 			twIncrement = twIncrement + 1

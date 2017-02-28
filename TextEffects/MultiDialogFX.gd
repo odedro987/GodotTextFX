@@ -5,6 +5,8 @@ var currentMessageIndex = 0
 var richLabelFX
 var portraits = []
 var started = false
+var node = null
+var funcs
 
 func _ready():
 	richLabelFX = get_node("Panel/Grid/DialogRichLabelFX")
