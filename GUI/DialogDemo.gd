@@ -10,5 +10,12 @@ func _ready():
 										 "1Derpmon: Well, \\7me too!\\x",\
 										 "0Derpgel: Huh?",\
 										 "1Derpmon: \\2Oh...\\x"],\
-										 ["res://Assets/Derpgel.png", "res://Assets/Derpotaur.png"], 0.9)
+										 ["res://Assets/Derpgel.png", "res://Assets/Derpotaur.png"], 0.9, self, [[0, 2, 5], ["a", "b", "c"]])
 	get_node("MultiDialogFX").startMessage()
+
+func a():
+	print("a")
+func b():
+	print("b")
+func c():
+	print("c")

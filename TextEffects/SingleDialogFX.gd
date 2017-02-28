@@ -4,6 +4,9 @@ var messages = []
 var currentMessageIndex = 0
 var richLabelFX
 var started = false
+var callbackNode = null
+var callbackData = [[], []]
+var currentCallback = 0
 
 func _ready():
 	richLabelFX = get_node("Panel/Grid/DialogRichLabelFX")
@@ -16,13 +19,22 @@ func _ready():
 func startMessage():
 	if(!started):
 		started = true
+	if(callbackNode != null):
+		if(callbackData[0].size() > 0 && currentCallback < callbackData[0].size()):
+			if(currentMessageIndex == callbackData[0][currentCallback]):
+				callbackNode.call(callbackData[1][currentCallback])
+				currentCallback = currentCallback + 1
 	richLabelFX.updateText(messages[currentMessageIndex])
 
 #Sets the dialog variables.
-func setDialog(newMessages, delay,  newPortrait):
+func setDialog(newMessages, delay, newPortrait, callbackNode=null, callbackData=null):
 	setDialogMessages(newMessages)
 	setPortrait(newPortrait)
 	richLabelFX.setTypewriter(delay)
+	self.callbackNode = callbackNode
+	if(callbackData != null):
+		self.callbackData[0] = callbackData[0]
+		self.callbackData[1] = callbackData[1]
 
 #Sets the messages.
 func setDialogMessages(newMessages):
